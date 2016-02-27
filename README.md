@@ -91,7 +91,7 @@ Simple hello world example:
             
             3
             
-  Calling functions from other functions:
+  Calling functions from other function:
   
             object Test{
               def main(args: Array[String]): Unit = {
@@ -106,7 +106,7 @@ Simple hello world example:
             
             35
  
-  Recurssive function: 
+  Recursive function: 
   
             def factorial(number:Int) : Int = {
               if (number == 1)
@@ -117,7 +117,7 @@ Simple hello world example:
             
             120
   
-  Tail recurssion:
+  Tail recursion:
   
             def factorial(accumulator: Int, number: Int) : Int = {
               if(number == 1)
