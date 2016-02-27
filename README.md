@@ -33,11 +33,11 @@ Steps:
   10. scala prompt can be seen, which means spark is running
   
 ###Steps for Hadoop2.6.0 installation on Ubuntu(Single Node Cluster)
-  http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
+http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_single_node_cluster.php
 
 
-###Steps for Apache Spark installation on Ubuntu 
-  http://blog.prabeeshk.com/blog/2014/10/31/install-apache-spark-on-ubuntu-14-dot-04/
+###Steps for Apache Spark installation on Ubuntu
+http://blog.prabeeshk.com/blog/2014/10/31/install-apache-spark-on-ubuntu-14-dot-04/
   
 
 ##Scala Basics:
@@ -241,19 +241,158 @@ Simple hello world example:
               b
               c
   
-  Higher Order functionS:
+  Higher Order functions:
   
               class Decorator(left: String, right: String) {
                 def layout[A] (x: A) = left + x.toString() + right
               }
 
               object Test{
-              def main(args:Array[String]){
-              val decorator = new Decorator("[", "]")
-               println(apply(decorator.layout, 7))
-              }
+                def main(args:Array[String]){
+                  val decorator = new Decorator("[", "]")
+                  println(apply(decorator.layout, 7))
+                }
                 def apply(f: Int => String, v: Int) = f(v)
               }
               Test.main(Array())
               
               [7]
+
+###Spark Introduction: 
+  [apache-spark-introduction](http://www.infoq.com/articles/apache-spark-introduction)
+
+
+###Worked out examples using different Transformations & Actions
+
+  word count:
+  
+             scala> var textFile = sc.textFile("../README.md")
+             scala> textFile.count()
+             res0: Long = 95
+  creating a new RDD[Int]: 
+  
+             scala> var xtemp = sc.parallelize(Array(1,2,2,4))
+###Transformations:
+
+  * map: multiplying each element of RDD by 2
+  
+             scala> xtemp.map(x => (x*2))
+             
+  * filter: filter elements > 2
+  
+             scala> xtemp.filter(x => (x > 2))
+  * flatMap:
+  
+             scala> var list = List(1,2,3)
+             scala> def g(v:Int) = List(v-1, v, v+1)
+             scala> list.flatMap(x => g(x))
+             res1: List[Int] = List(0,1,2,1,2,3,2,3,4)
+             scala> list.map(x => g(x))
+             res2: List[List[Int]]] = List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4))
+             scala> list.map(x => g(x)).flatten
+             res3: List[Int] = List(0,1,2,1,2,3,2,3,4)
+  * groupByKey:  
+  
+            scala> xtemp.map(x => (x,1)).groupByKey().map(y => (y._1,y._2.sum))
+  * reduceByKey:
+  
+            scala> xtemp.map(x => (x,1)).reduceByKey(_+_)
+  [Avoid using groupByKey](https://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html)
+  * [mapPartitions & mapPartitionsWithIndex:](http://apachesparkbook.blogspot.in/2015/11/mappartition-example.html)
+  * union:
+  
+            scala> var rdd1 = sc.parallelize(Array("a","a","b"))
+            scala> var rdd2 = sc.parallelize(Array("c","a","e"))
+            scala> rdd1.union(rdd2)
+            Array[String] = Array(a,a,b,c,a,e)
+  * intersection:
+  
+            scala> rdd1.intersection(rdd2)
+            Array[String] = Array(a)
+  * join:
+  
+            scala> var rdd1 = sc.parallelize(Array(1,2))
+            scala> var rdd2 = sc.parallelize(Array(2,3))
+            scala> rdd1.map(x => (x,1)).join(rdd2.map(y => (y,2)))
+            res4: Array[(Int,(Int,Int))] = Array(2,(1,2))
+  * cartesian:
+  
+            scala> rdd1.cartesian(rdd2)
+            res5: Array[(Int,Int)] = Array((1,2),(1,3),(2,2),(2,3))
+  * cogroup:
+  
+            scala> var rdd1 = sc.parallelize(Array((1,2),(2,3),(2,4)))
+            scala> var rdd2 = sc.parallelize(Array((2,6),(2,9)))
+            scala> rdd1.cogroup(rdd2)
+            
+  * sortByKey:
+  
+            scala> var rdd1 = sc.parallelize(Array((2,3),(1,2)))
+            scala> rdd1.sortByKey()
+            Array((1,2),(2,3))
+  * [aggregateByKey:](http://codingjunkie.net/spark-agr-by-key/)
+    
+            scala> var keysWithValuesList = Array("foo=A", "foo=A", "foo=A", "foo=A", "foo=B", "bar=C", "bar=D", "bar=D")
+            scala> var data = sc.parallelize(keysWithValuesList)
+            scala> var kv = data.map(_.split("=")).map(x => (x._1,x._2)).cache()
+            scala> var initialCount = 0;
+            scala> var addToCounts = (n: Int, v: String) => n + 1
+            scala> var sumPartitionCounts = (n1: Int, n2: Int) => n1 + n2
+            scala> var countByKey = kv.aggregateByKey(initialCount)(addToCounts, sumPartitionCounts)
+            scala> countByKey.collect
+            res6: Array[(String, Int)] = Array((foo,5), (bar,3))
+
+  * [pipe](http://blog.madhukaraphatak.com/pipe-in-spark/)
+  * coalesce:
+  
+            scala> var rdd1 = sc.parallelize(1 to 10, 10)
+            scala> var rdd2 = rdd1.coalesce(2, false)
+            scala> rdd2.partitions.length
+            res7: Int = 2
+  * repartition
+  
+            scala> var rdd2 = rdd1.repartition(2)
+            scala> rdd2.partitions.length
+            res8: Int = 2
+
+###Actions:
+  
+  * reduce:
+  
+            scala> xtemp.reduce(_+_)
+            Int = 8
+  * collect:
+  
+            scala> xtemp.collect
+            res0: Array[Int] = Array(1,2,2,3)
+  * count:
+  
+            scala> xtemp.count
+            res9: Long = 4
+  * take:
+  
+            scala> xtemp.take(2)
+            res10: Array[Int] = Array(1,2)
+  * takeSample:
+  
+            scala> xtemp.takeSample(true,2,13)
+            res11: Array[Int] = Array(2,3)
+  * takeOrdered:
+  
+            scala> xtemp.take(2)
+            res12: Array[Int] = Array(1,2)
+  * countByKey:
+  
+            scala> var keysWithValuesList = Array("foo=A", "foo=A", "foo=A", "foo=A", "foo=B", "bar=C", "bar=D", "bar=D")
+            scala> var data = sc.parallelize(keysWithValuesList)
+            scala> var kv = data.map(_.split("=")).map(x => (x._1,x._2)).cache()
+            scala> kv.countByKey()
+            res13: scala.collection.Map[String,Long] = Map(foo -> 5, bar -> 3)
+  * forEach:
+    
+            scala> xtemp.foreach(x => println(x))
+            2
+            2
+            1
+            3
+ 
