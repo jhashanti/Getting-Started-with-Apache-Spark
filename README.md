@@ -84,7 +84,7 @@ Simple hello world example:
             3
             5
             
-  Annonymous function:
+  Anonymous function:
   
             var add = (a:Int,b:Int) => a+b
             println(add(1,2))
