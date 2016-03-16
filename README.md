@@ -330,6 +330,14 @@ Simple hello world example:
             scala> var rdd1 = sc.parallelize(Array((2,3),(1,2)))
             scala> rdd1.sortByKey()
             Array((1,2),(2,3))
+  * [combineByKey](http://stackoverflow.com/questions/29246756/how-createcombiner-mergevalue-mergecombiner-works-in-combinebykey-in-spark-us):
+
+            scala> val rdd = sc.parallelize(Array(("A", 1), ("B", 4), ("A", 2), ("B", 8), ("A", 3))) 
+            scala> rdd.combineByKey(
+                      (x:Int) => (x, 1),
+                      (acc:(Int, Int), x) => (acc._1 + x, acc._2 + 1),
+                      (acc1:(Int, Int), acc2:(Int, Int)) => (acc1._1 + acc2._1, acc1._2 + acc2._2))
+
   * [aggregateByKey:](http://codingjunkie.net/spark-agr-by-key/)
     
             scala> var keysWithValuesList = Array("foo=A", "foo=A", "foo=A", "foo=A", "foo=B", "bar=C", "bar=D", "bar=D")
