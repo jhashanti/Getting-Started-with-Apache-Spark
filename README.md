@@ -1,7 +1,7 @@
 
 ## Table of Contents
 
-* [Installing & setting up spark locally](#running-spark)
+* [Installing & Setting Up Spark locally](#running-spark)
 * [Scala Basics with examples](#scala-basics)
 * [Apache Spark Introduction](#spark-intro)
   * [Resilient Distributed Datasets](#spark-rdd)
@@ -20,10 +20,12 @@
   * [GraphX](#spark-graphx)
 * [Published Papers](#spark-papers)
 * [Blogs](#spark-blogs)
-* [Quora Resources](#spark-quora-resource)
-* [Use Cases](#spark-use-case)
-* [Courses](#spark-courses)
 * [Books](#spark-books)
+* [Videos](#spark-videos)
+* [Use Cases](#spark-use-case)
+* [Quora Resources](#spark-quora-resource)
+* [Courses & Certifications](#spark-courses-certification)
+* [Groups](#spark-groups)
 
 ###<a name="running-spark"></a>Installing & setting up spark locally
 
@@ -308,10 +310,10 @@
 
 ####<a name="spark-rdd"></a>Resilient Distributed Datasets
 
-#####<a name="spark-creating-rdd">creating a new RDD[Int] 
+#####<a name="spark-creating-rdd">creating RDD
     
                scala> var xtemp = sc.parallelize(Array(1,2,2,4))
-               var textFile = sc.textFile("../README.md")
+               scala> var textFile = sc.textFile("../README.md")
 
 ####<a name="spark-transformation"></a>Transformations
 
@@ -514,39 +516,55 @@
    * [GraphX](http://ampcamp.berkeley.edu/big-data-mini-course/graph-analytics-with-graphx.html)
    
  
-###<a name="spark-papers"></a>Papers:
-  
- * [Spark-Working:Berkeley](http://www.cs.berkeley.edu/~matei/papers/2010/hotcloud_spark.pdf)
- * [Resilient Distributed Datasets](https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf)
- * [Machine Learning | Stanford](http://stanford.edu/~rezab/sparkworkshop/slides/xiangrui.pdf)
+###<a name="spark-papers"></a>Papers
+ 
+ * [Spark SQL: Relational Data Processing in Spark.](http://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf)Michael Armbrust, Reynold S. Xin, Cheng Lian, Yin Huai, Davies Liu, Joseph K. Bradley, Xiangrui Meng, Tomer Kaftan, Michael J. Franklin, Ali Ghodsi, Matei Zaharia. SIGMOD 2015. June 2015
+ * [GraphX: Unifying Data-Parallel and Graph-Parallel Analytics.](https://amplab.cs.berkeley.edu/wp-content/uploads/2014/02/graphx.pdf)Reynold S. Xin, Daniel Crankshaw, Ankur Dave, Joseph E. Gonzalez, Michael J. Franklin, Ion Stoica. OSDI 2014. October 2014.
+ * [Discretized Streams: Fault-Tolerant Streaming Computation at Scale.](http://people.csail.mit.edu/matei/papers/2013/sosp_spark_streaming.pdf)Matei Zaharia, Tathagata Das, Haoyuan Li, Timothy Hunter, Scott Shenker, Ion Stoica. SOSP 2013. November 2013.
+ * [Shark: SQL and Rich Analytics at Scale.](http://people.csail.mit.edu/matei/papers/2013/sigmod_shark.pdf)Reynold S. Xin, Joshua Rosen, Matei Zaharia, Michael J. Franklin, Scott Shenker, Ion Stoica. SIGMOD 2013. June 2013.
+ * [Discretized Streams: An Efficient and Fault-Tolerant Model for Stream Processing on Large Clusters.](http://people.csail.mit.edu/matei/papers/2012/hotcloud_spark_streaming.pdf)Matei Zaharia, Tathagata Das, Haoyuan Li, Scott Shenker, Ion Stoica. HotCloud 2012. June 2012
+ * [Shark: Fast Data Analysis Using Coarse-grained Distributed Memory (demo).](http://people.csail.mit.edu/matei/papers/2012/sigmod_shark_demo.pdf)Cliff Engle, Antonio Lupher, Reynold S. Xin, Matei Zaharia, Haoyuan Li, Scott Shenker, Ion Stoica. SIGMOD 2012. May 2012
+ * [Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing.](http://people.csail.mit.edu/matei/papers/2012/nsdi_spark.pdf)Matei Zaharia, Mosharaf Chowdhury, Tathagata Das, Ankur Dave, Justin Ma, Murphy McCauley, Michael J. Franklin, Scott Shenker, Ion Stoica. NSDI 2012. April 2012
+ * [Spark: Cluster Computing with Working Sets.](http://people.csail.mit.edu/matei/papers/2010/hotcloud_spark.pdf)Matei Zaharia, Mosharaf Chowdhury, Michael J. Franklin, Scott Shenker, Ion Stoica. HotCloud 2010. June 2010
   
 ###<a name="spark-blogs"></a>Blogs:
 
- * [Cloudera](https://blog.cloudera.com/blog/category/spark/)
- * [Databricks](https://databricks.com/blog/category/coding/spark)
+ * [why apache spark is a crossover hit for data scientists | Cloudera](http://blog.cloudera.com/blog/2014/03/why-apache-spark-is-a-crossover-hit-for-data-scientists/)
+ * [DeepSpark | Databricks](https://databricks.com/blog/2016/04/01/unreasonable-effectiveness-of-deep-learning-on-spark.html)
  * [Apache Spark Machine Learning Tutorial | MapR](https://www.mapr.com/blog/apache-spark-machine-learning-tutorial)
  * [Top Apache Spark Interview Questions | Edureka](http://www.edureka.co/blog/top-apache-spark-interview-questions-you-should-prepare-for-in-2016?utm_source=quora&utm_medium=crosspost&utm_campaign=social-media-edureka)
  * [Interview questions | Intellipaat](https://intellipaat.com/interview-question/apache-spark-interview-questions/)
  * [Spark Accumulators, what are they good for?](http://imranrashid.com/posts/Spark-Accumulators/)
-
-###<a name="spark-quora-resource"></a>Quora Resources:
-
- * [What exactly is Apache Spark and how does it work](https://www.quora.com/What-exactly-is-Apache-Spark-and-how-does-it-work)
- * [Difference between Spark & Hadoop Map Reduce](https://www.quora.com/What-is-the-difference-between-Apache-Spark-and-Apache-Hadoop-Map-Reduce)
  
-###<a name="spark-use-case"></a>Use Case:
-
- * [Predicting Telecom churn with Spark | Cloudera](https://blog.cloudera.com/blog/2016/02/how-to-predict-telco-churn-with-apache-spark-mllib/)
- 
- 
-###<a name="spark-courses"></a>Courses:
-
-* [Introduction to Big Data with Apache Spark](https://courses.edx.org/courses/BerkeleyX/CS100.1x/1T2015/info) 
-* [Scalable Machine Learning](https://courses.edx.org/courses/BerkeleyX/CS190.1x/1T2015/info)
-* [Big Data mini course | AMP Camp Berkeley](http://ampcamp.berkeley.edu/big-data-mini-course-home/)
-
-###<a name="spark-books"></a>Books:
+###<a name="spark-books"></a>Books
 
 * [Machine Learning with Spark](https://www.packtpub.com/big-data-and-business-intelligence/machine-learning-spark)
 * [Fast Data Processing with Spark](https://www.packtpub.com/big-data-and-business-intelligence/fast-data-processing-spark)
 * [Mastering Apache Spark](https://www.gitbook.com/book/jaceklaskowski/mastering-apache-spark/details)
+* [Advanced Analytics with Spark](http://shop.oreilly.com/product/0636920035091.do)
+* [Databricks Spark Reference Applications](https://www.gitbook.com/book/databricks/databricks-spark-reference-applications/details)
+ 
+###<a name="spark-videos"></a>Videos
+
+ * [Apache Spark | YouTube](https://www.youtube.com/user/TheApacheSpark)
+ 
+###<a name="spark-use-case"></a>Use Case
+
+ * [Predicting Telecom churn with Spark | Cloudera](https://blog.cloudera.com/blog/2016/02/how-to-predict-telco-churn-with-apache-spark-mllib/)
+  
+###<a name="spark-quora-resource"></a>Quora Resources
+
+ * [What exactly is Apache Spark and how does it work](https://www.quora.com/What-exactly-is-Apache-Spark-and-how-does-it-work)
+ * [Difference between Spark & Hadoop Map Reduce](https://www.quora.com/What-is-the-difference-between-Apache-Spark-and-Apache-Hadoop-Map-Reduce)
+
+###<a name="spark-courses-certification"></a>Courses & Certifications
+
+* [Introduction to Big Data with Apache Spark](https://courses.edx.org/courses/BerkeleyX/CS100.1x/1T2015/info) 
+* [Scalable Machine Learning](https://courses.edx.org/courses/BerkeleyX/CS190.1x/1T2015/info)
+* [Big Data mini course | AMP Camp Berkeley](http://ampcamp.berkeley.edu/big-data-mini-course-home/)
+* [Apache Spark Scala Certification Training | SimpliLearn](http://www.simplilearn.com/big-data-and-analytics/apache-spark-scala-certification-training)
+
+
+###<a name="spark-groups"></a>Groups
+
+* [Spark Meetup](http://www.meetup.com/topics/spark/)
